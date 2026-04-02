@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Privacy information for Offline — Habit Tracker. Your habits stay on your device.">
+    <title>Privacy · Offline — Habit Tracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0c0f0d;
+            --bg-elevated: #141a16;
+            --surface: #1c2420;
+            --border: rgba(110, 188, 154, 0.18);
+            --text: #e6ebe8;
+            --muted: #8a9a90;
+            --accent: #6bcf9a;
+            --accent-soft: rgba(107, 207, 154, 0.12);
+            --ring: rgba(107, 207, 154, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Source Serif 4", Georgia, serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.7;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            z-index: 0;
+        }
+
+        .grid-bg {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(var(--border) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 70% 50% at 50% 0%, black 15%, transparent 65%);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .page {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            margin: 0 auto;
+            padding: clamp(2rem, 5vw, 3.5rem) clamp(1.25rem, 4vw, 2rem) 4rem;
+        }
+
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-family: Outfit, system-ui, sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: -0.02em;
+            color: var(--text);
+        }
+
+        .brand span {
+            color: var(--accent);
+        }
+
+        .back {
+            font-family: Outfit, system-ui, sans-serif;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        .back:hover {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-family: Outfit, system-ui, sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.75rem, 4vw, 2.1rem);
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 0.35rem;
+        }
+
+        .updated {
+            font-family: Outfit, system-ui, sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 2rem;
+        }
+
+        .highlight {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.25rem 1.2rem;
+            margin-bottom: 2rem;
+            border-left: 3px solid var(--accent);
+        }
+
+        .highlight p {
+            font-family: Outfit, system-ui, sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        h2 {
+            font-family: Outfit, system-ui, sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin: 2rem 0 0.75rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2:first-of-type {
+            margin-top: 0;
+        }
+
+        p {
+            color: var(--muted);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        p strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .list-plain {
+            list-style: none;
+            margin: 0.5rem 0 1.25rem;
+        }
+
+        .list-plain li {
+            color: var(--muted);
+            padding: 0.4rem 0 0.4rem 1.15rem;
+            position: relative;
+            font-size: 0.98rem;
+        }
+
+        .list-plain li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            opacity: 0.7;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        a:hover {
+            color: #8fdfb5;
+        }
+
+        .card {
+            background: var(--accent-soft);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            margin-top: 1.5rem;
+        }
+
+        .card p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="grid-bg" aria-hidden="true"></div>
+    <div class="page">
+        <div class="top-bar">
+            <p class="brand">Offline <span>— Habit Tracker</span></p>
+            <a href="/index.html" class="back">← Home</a>
+        </div>
+
+        <h1>Privacy</h1>
+        <p class="updated">Effective April 2026</p>
+
+        <div class="highlight">
+            <p>The app is built so your habit data never needs to leave your device. We do not operate accounts, servers, or analytics for this product.</p>
+        </div>
+
+        <h2>What this app does with data</h2>
+        <p>
+            <strong>Offline — Habit Tracker</strong> stores your habits, check-ins, streaks, reminders, and exported files on your iPhone, iPad, or Mac. That information is processed and retained locally by iOS, iPadOS, or macOS unless you choose to share it yourself (for example by sending an export).
+        </p>
+        <p>
+            As stated on the App Store, the developer does not collect data from this app for tracking or marketing. There are no third-party analytics SDKs, ad networks, or cloud sync tied to the app in its default operation.
+        </p>
+
+        <h2>Notifications</h2>
+        <p>
+            If you turn on reminders, the system schedules local notifications on your device. You can disable them anytime in the app or in system Settings. No reminder content is sent to us.
+        </p>
+
+        <h2>Exports</h2>
+        <p>
+            When you export data as JSON, that file is created on your device. What you do with the file (save, email, back up) is under your control and subject to those services’ own policies.
+        </p>
+
+        <h2>Children</h2>
+        <p>
+            The app is rated 9+ on the App Store. It does not knowingly collect personal information from anyone. There is no social feed or chat; use is limited to local habit tracking.
+        </p>
+
+        <h2>Changes</h2>
+        <p>
+            If our practices change in a future version, we will update this page and, where appropriate, note changes in the app or on the store listing.
+        </p>
+
+        <h2>Developer &amp; further detail</h2>
+        <p>
+            <strong>Developer:</strong> Said Lamaarague · LOOWZ Studio<br>
+            Additional privacy documentation may appear at the developer site below.
+        </p>
+
+        <div class="card">
+            <p>
+                <a href="https://loowz.com/privacy/" target="_blank" rel="noopener noreferrer">https://loowz.com/privacy/</a>
+            </p>
+        </div>
+
+        <h2>Questions</h2>
+        <p>
+            For privacy questions related to this app, use the contact options provided on <a href="https://loowz.com/" target="_blank" rel="noopener noreferrer">loowz.com</a> or refer to the App Store listing for <a href="https://apps.apple.com/us/app/offline-habit-tracker/id6761316392?uo=4" target="_blank" rel="noopener noreferrer">Offline — Habit Tracker</a>.
+        </p>
+    </div>
+</body>
+
+</html>
